@@ -5,7 +5,7 @@ class Acceleration extends Phaser.Scene {
 
     create() {
         // variables and settings
-        this.DRAG = 200;    // DRAG < ACCELERATION = icy slide
+        this.DRAG = 1000;    // DRAG < ACCELERATION = icy slide
         this.physics.world.gravity.y = 1000;
 
         // set bg color
@@ -25,9 +25,9 @@ class Acceleration extends Phaser.Scene {
 
         // set up my alien son 👽
         this.alien = this.physics.add.sprite(game.config.width/2, game.config.height/2, 'platformer_atlas', 'front').setScale(SCALE);
-        this.alien.setCollideWorldBounds(true);
+        //this.alien.setCollideWorldBounds(true);
         // set alien max velocity here (.body.setMaxVelocityX())
-        // this.alien.body.setMaxVelocity(300);
+        this.alien.body.setMaxVelocity(300);
 
         // note that we don't have to set up animations again because they were already created in the previous scene
 
@@ -62,7 +62,7 @@ class Acceleration extends Phaser.Scene {
         // check keyboard input
         if(cursors.left.isDown) {
             // set alien acceleration here
-
+            this.alien.setAccelerationX(-400);    
 
             // Animation and key shading
             // see: https://photonstorm.github.io/phaser3-docs/Phaser.GameObjects.Components.Animation.html#play__anchor
@@ -72,7 +72,7 @@ class Acceleration extends Phaser.Scene {
             this.leftKey.tint = 0xFACADE;   // tint key
         } else if(cursors.right.isDown) {
             // set alien acceleration here
-
+            this.alien.setAccelerationX(400);
 
             // Animation and key shading
             this.alien.resetFlip();
@@ -80,7 +80,7 @@ class Acceleration extends Phaser.Scene {
             this.rightKey.tint = 0xFACADE;  // tint key
         } else {
             // set acceleration to 0 here so DRAG will take over
-
+            this.alien.setAccelerationX(0);
 
             this.alien.body.setDragX(this.DRAG);
 
@@ -93,5 +93,6 @@ class Acceleration extends Phaser.Scene {
         // wrap physics object(s) .wrap(gameObject, padding)
         this.physics.world.wrap(this.cloud01, this.cloud01.width/2);
         this.physics.world.wrap(this.cloud02, this.cloud02.width/2);
+        this.physics.world.wrap(this.alien, 0);
     }
 }

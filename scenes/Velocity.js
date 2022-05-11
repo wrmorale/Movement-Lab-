@@ -32,7 +32,7 @@ class Velocity extends Phaser.Scene {
         // set up my alien son 👽
         // see: https://rexrainbow.github.io/phaser3-rex-notes/docs/site/arcade-gameobject/#sprite-object
         this.alien = this.physics.add.sprite(game.config.width/2, game.config.height/6, 'platformer_atlas', 'front').setScale(SCALE);
-        this.alien.setCollideWorldBounds(true);
+        //this.alien.setCollideWorldBounds(true);
 
         // add arrow key graphics as UI
         this.upKey = this.add.sprite(64, 32, 'arrowKey');
@@ -49,7 +49,7 @@ class Velocity extends Phaser.Scene {
         cursors = this.input.keyboard.createCursorKeys();
 
         // add physics collider
-        // this.physics.add.collider(this.alien, this.ground);
+        this.physics.add.collider(this.alien, this.ground);
 
         // set up Scene switcher
         // note: this style of scene switching is for demo purposes only
@@ -62,6 +62,7 @@ class Velocity extends Phaser.Scene {
         if(cursors.left.isDown) {
             // set alien velocity here (.setVelocityX())
             // A negative value moves left
+            this.alien.setVelocityX(-350);
 
 
             // Animation and arrow key tinting
@@ -74,6 +75,7 @@ class Velocity extends Phaser.Scene {
         } else if(cursors.right.isDown) {
             // Set alien velocity here (.setVelocityX())
             // A positive value moves right
+            this.alien.setVelocityX(350);
 
 
             // Animation and arrow key tinting
@@ -83,7 +85,7 @@ class Velocity extends Phaser.Scene {
 
         } else {
             // Set alien velocity to zero here (.setVelocityX())
-
+            this.alien.setVelocityX(0);
 
             // Animation and arrow key tinting
             this.alien.anims.play('idle');
@@ -95,6 +97,7 @@ class Velocity extends Phaser.Scene {
         this.physics.world.wrap(this.cloud01, this.cloud01.width/2);
         this.physics.world.wrap(this.cloud02, this.cloud02.width/2);
         // add alien world wrap line here
+        this.physics.world.wrap(this.alien, 0);
 
     }
 }
